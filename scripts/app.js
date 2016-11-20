@@ -40,9 +40,7 @@ app.controller('appCtrl', function($scope) {
    * @param digit what digit was clicked
    */
   $scope.digitClicked = function (digit) {
-    console.log('digit entered', digit);
     if ($scope.clearValue) {
-      console.log('entering value for clear', $scope.clearValue);
       $scope.displayValue = digit;
       $scope.clearValue = false;
     } else {
@@ -51,21 +49,17 @@ app.controller('appCtrl', function($scope) {
         $scope.data = [];
       } else if ( digit == 'CE') {
         $scope.displayValue = $scope.data.pop();
-        console.log('entering CE button', $scope.displayValue, $scope.displayValue, $scope.data);
       } else {
         $scope.displayValue = $scope.displayValue.toString() + digit;
       }
     }
-    console.log('$scope.displayValue', $scope.displayValue);
     if( digit ==  'AC') {
       $scope.displayValue = '';
     } else if (digit == 'CE') {
       $scope.displayValue = $scope.data.toString();
-      console.log('popup functionality', $scope.data);
-      console.log(' value new',$scope.displayValue);
     } else {
       $scope.data.push($scope.displayValue.toString());
-      $scope.valueB = $scope.displayValue
+      $scope.valueB = $scope.displayValue;
     }
   };
 
@@ -76,11 +70,9 @@ app.controller('appCtrl', function($scope) {
    * @param operation which operation was clicked
    */
   $scope.operationClicked = function (operation) {
-    console.log('operation', operation);
     $scope.selectedOperation = operation;
     $scope.valueA = $scope.displayValue;
     $scope.valueB = $scope.displayValue;
-    console.log('$scope.valueA and $scope.valueB is :', $scope.valueA, $scope.valueB);
     $scope.clearValue = true;
   };
 
@@ -91,12 +83,9 @@ app.controller('appCtrl', function($scope) {
    */
   $scope.compute = function () {
     if($scope.selectedOperation!=null) {
-      console.log('final computation data :',$scope.valueA, $scope.valueB );
       $scope.displayValue = $scope.selectedOperation(parseFloat($scope.valueA), parseFloat($scope.valueB));
-      console.log('Final displayValue',$scope.displayValue);
       $scope.clearValue = true;
       $scope.valueA = $scope.displayValue;
     }
   }
-
 });
