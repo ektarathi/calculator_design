@@ -14,8 +14,6 @@ app.controller('appCtrl', function($scope) {
   //constants
   $scope.equalSignKey = {label: "="};
 
-  //$scope.clearKeys = {label: "AC", value: 'AC'}, {label: "CE", value: 'CE'}
-
   $scope.digitKeys = [
     {label: "AC", value: 'AC'}, {label: "CE", value: 'CE'}, {},
     {label: "1", value: 1}, {label: "2", value: 2}, {label: "3", value: 3},
@@ -39,9 +37,11 @@ app.controller('appCtrl', function($scope) {
    * @param digit what digit was clicked
    */
   $scope.digitClicked = function (digit) {
+
     if ($scope.clearValue) {
       $scope.displayValue = digit;
       $scope.displayValue = $scope.displayValue.toString();
+      $scope.checkDotValue($scope.displayValue);
       $scope.clearValue = false;
     } else {
       if(digit == 'AC') {
@@ -49,9 +49,11 @@ app.controller('appCtrl', function($scope) {
       } else if ( digit == 'CE') {
         $scope.displayValue = $scope.displayValue;
       } else {
+        $scope.checkDotValue($scope.displayValue);
         $scope.displayValue = $scope.displayValue + digit;
       }
     }
+    console.log('first loop dot value', $scope.displayValue);
     if( digit ==  'AC') {
       $scope.displayValue = '';
     } else if (digit == 'CE') {      
@@ -67,6 +69,18 @@ app.controller('appCtrl', function($scope) {
     }
   };
 
+  /**
+   * Checking if period is entered more than once
+   */
+
+  $scope.checkDotValue = function(value) {
+    $scope.displayValue = $scope.displayValue.replace(/[^0-9\.]/g,'');
+    if($scope.displayValue.split('.').length > 2) {
+      $scope.displayValue = $scope.displayValue.replace(/\.+$/,"");
+      console.log('replace first loop value', $scope.displayValue);
+     }
+  }
+  
   /**
    * When operation key is clicked operation should be remembered,
    * displayed value should be treated as first and second number to perform operation on
@@ -87,7 +101,7 @@ app.controller('appCtrl', function($scope) {
    */
   $scope.compute = function () {
     if($scope.selectedOperation!=null) {
-      $scope.displayValue = $scope.selectedOperation(parseFloat($scope.valueA), parseFloat($scope.valueB));
+      $scope.displayValue = ($scope.selectedOperation(parseFloat($scope.valueA), parseFloat($scope.valueB))).toFixed(2);
       $scope.clearValue = true;
       $scope.valueA = $scope.displayValue;
     }
