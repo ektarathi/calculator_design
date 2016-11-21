@@ -7,7 +7,7 @@ body {
     margin: auto;
     background-color: #fff;
     height: 335px;
-    width: 210px;
+    width: 255px;
     overflow: hidden;
     border-radius: 6px;
 }
@@ -27,7 +27,7 @@ body {
 
 .digitsKeyboard {
     overflow: hidden;
-    width: 156px;
+    width: 165px;
     float: left;
 }
 

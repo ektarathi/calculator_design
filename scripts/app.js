@@ -9,7 +9,6 @@ app.controller('appCtrl', function($scope) {
   $scope.valueB = 0;                          //second (right) value that will be used for computation
   $scope.selectedOperation = null;            //last operation selected by user
   $scope.clearValue = true;                   //should value displayed on screen be cleared after new digit pressed?
-  $scope.data = [];
 
 
   //constants
@@ -42,23 +41,29 @@ app.controller('appCtrl', function($scope) {
   $scope.digitClicked = function (digit) {
     if ($scope.clearValue) {
       $scope.displayValue = digit;
+      $scope.displayValue = $scope.displayValue.toString();
       $scope.clearValue = false;
     } else {
       if(digit == 'AC') {
         $scope.displayValue = '';
-        $scope.data = [];
       } else if ( digit == 'CE') {
-        $scope.displayValue = $scope.data.pop();
+        $scope.displayValue = $scope.displayValue;
       } else {
-        $scope.displayValue = $scope.displayValue.toString() + digit;
+        $scope.displayValue = $scope.displayValue + digit;
       }
     }
+    console.log('hurray found new value data :',$scope.displayValue);
     if( digit ==  'AC') {
       $scope.displayValue = '';
-    } else if (digit == 'CE') {
-      $scope.displayValue = $scope.data.toString();
+    } else if (digit == 'CE') {      
+      if($scope.valueA != 0) {
+        $scope.displayValue = $scope.valueA.toString();
+        $scope.displayValue = $scope.displayValue.substring(0, $scope.displayValue.length-1);
+        $scope.valueA = 0;
+      } else {
+        $scope.displayValue = $scope.displayValue.substring(0, $scope.displayValue.length-1);
+      }
     } else {
-      $scope.data.push($scope.displayValue.toString());
       $scope.valueB = $scope.displayValue;
     }
   };
