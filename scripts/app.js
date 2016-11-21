@@ -52,7 +52,6 @@ app.controller('appCtrl', function($scope) {
         $scope.displayValue = $scope.displayValue + digit;
       }
     }
-    console.log('hurray found new value data :',$scope.displayValue);
     if( digit ==  'AC') {
       $scope.displayValue = '';
     } else if (digit == 'CE') {      
